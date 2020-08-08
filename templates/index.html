@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <title>{{title}} massFlowRate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <style>
+    form {
+      padding: 0px 50px;
+      max-width: 50%;
+    }
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      background-color: #4caf50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    div {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+  </style>
+  <body>
+    <h1>{{heading}}</h1>
+    <div style="display:flex; flex-direction:row; ">
+    <form
+      action="#"
+      method="post"
+      id="throughputRateForm"
+      enctype="multipart/form-data"
+    >
+      <!-- models -->
+      <h3 for="models">Select a model from the following Options:</h3>
+      <select id="models" name="models" style="width: fit-content;">
+        <option value="beverloo">Beverloo</option>
+        <option value="bcp">BCP</option>
+        <option value="tudor">Tudor</option>
+      </select>
+      <!-- run mode -->
+      <h3 for="modes">Choose run mode:</h3>
+      <select id="modes" name="modes" style="width: fit-content;">
+        <option value="automatic">Automatic</option>
+        <option value="manual">Manual</option>
+      </select>
+      <!-- run mode -->
+      <h3 for="save_modes">Choose save mode:</h3>
+      <select id="save_mode" name="save_modes" style="width: fit-content;">
+        <option value="1">Single Sheet</option>
+        <option value="2">Generate new sheet on every submit</option>
+      </select>
+      <br />
+      <!-- values -->
+      <label>First value:</label>
+      <input name="first_value" class="input_box" type="text" />
+      <label>Second value:</label>
+      <input name="second_value" class="input_box" type="text" />
+      <label>Steps:</label>
+      <input name="model_steps" class="input_box" type="text" />
+      
+      {% if result %}
+      <input
+      id="calculateMassFlowRate"
+      type="submit"
+      class="new-button-data"
+      value="Clear and continue"
+      />
+      {% else %}
+      <input
+        id="calculateMassFlowRate"
+        type="submit"
+        class="new-button-data"
+        value="Submit"
+      />
+      {% endif %}
+        
+      <!-- <output id="massFlowRateResult" class="result_box"></output> -->
+     
+    </form>
+    <div style=" min-width: 50%;background-color: silver; max-height: 500px;overflow: scroll;" >
+    <h1 >Output:</h1>
+    {% if result %}
+    <a href="/static/Model_reports.xlsx" download>
+      <h4>Download Output</h4>
+    </a>
+    {% endif %}
+    <!-- <h3>{{result}}</h3> -->
+    <table >
+      <tr >
+        <th>diameter(mm)</th>
+        <th>massFlowRate(kg/h)</th>
+      </tr>
+      {% for n in result %}
+      <tr>
+        <td>{{n.diameter}}</td>
+        <td>{{n.flow}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+</div>
+    </body>
+  </body>
+</html>
+
+
+
+ 
